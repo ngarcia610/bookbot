@@ -46,16 +46,15 @@ def char_count(text):
                     char_dict[key] += 1
     return char_dict
 
+def nice_output(word_count, char_dict):
+    print("--- Begin report of books/frankenstein.txt ---\n")
+    sorted_dict = dict(sorted(char_dict.items(), key=lambda item: item[1], reverse=True))
+    for key, value in sorted_dict.items():
+        print(f"The {key} character was found {value} times.")
+    print("\n--- End report ---")
+
 book = print_book(BOOK_PATH)
 words = word_count(book)
 chars = char_count(book)
 
-# Print the entire book
-#print(book)
-
-# Print the number of words
-print(f"The number of words in the text: {words}")
-
-# Print the number of times each character appears
-nice_chars = json.dumps(chars, indent=4, sort_keys=True)
-print(f"The number of times each character appears in the text: \n {nice_chars}")
+nice_output(words, chars)
