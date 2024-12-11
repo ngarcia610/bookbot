@@ -1,5 +1,3 @@
-import json
-
 BOOK_PATH = "books/frankenstein.txt"
 
 def print_book(path):
@@ -46,11 +44,17 @@ def char_count(text):
                     char_dict[key] += 1
     return char_dict
 
-def nice_output(word_count, char_dict):
+def nice_output(word_int, char_dict):
     print("--- Begin report of books/frankenstein.txt ---\n")
+
+    # Print the word count
+    print(f"{word_int} words found in the document.")
+
+    # Sort the dictionary, reverse it so it's descending, and print each key, value
     sorted_dict = dict(sorted(char_dict.items(), key=lambda item: item[1], reverse=True))
     for key, value in sorted_dict.items():
         print(f"The {key} character was found {value} times.")
+
     print("\n--- End report ---")
 
 book = print_book(BOOK_PATH)
