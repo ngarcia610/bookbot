@@ -1,64 +1,41 @@
-BOOK_PATH = "books/frankenstein.txt"
+import sys
+from stats import (
+    get_num_words,
+    chars_dict_to_sorted_list,
+    get_chars_dict,
+)
 
-def print_book(path):
+
+def main():
+    if len(sys.argv) > 1:
+        book_path = sys.argv[1]
+    else:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    text = get_book_text(book_path)
+    num_words = get_num_words(text)
+    chars_dict = get_chars_dict(text)
+    chars_sorted_list = chars_dict_to_sorted_list(chars_dict)
+    print_report(book_path, num_words, chars_sorted_list)
+
+
+def get_book_text(path):
     with open(path) as f:
-      return f.read()
+        return f.read()
 
-def word_count(text):
-    return len(text.split())
 
-def char_count(text):
-    char_dict = {
-        'a': 0,
-        'b': 0,
-        'c': 0,
-        'd': 0,
-        'e': 0,
-        'f': 0,
-        'g': 0,
-        'h': 0,
-        'i': 0,
-        'j': 0,
-        'k': 0,
-        'l': 0,
-        'm': 0,
-        'n': 0,
-        'o': 0,
-        'p': 0,
-        'q': 0,
-        'r': 0,
-        's': 0,
-        't': 0,
-        'u': 0,
-        'v': 0,
-        'w': 0,
-        'x': 0,
-        'y': 0,
-        'z': 0
-    }
-    text = text.lower()
-    for word in text:
-        for char in word:
-            for key, value in char_dict.items():
-                if key == char:
-                    char_dict[key] += 1
-    return char_dict
+def print_report(book_path, num_words, chars_sorted_list):
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {book_path}...")
+    print("----------- Word Count ----------")
+    print(f"Found {num_words} total words")
+    print("--------- Character Count -------")
+    for item in chars_sorted_list:
+        if not item["char"].isalpha():
+            continue
+        print(f"{item['char']}: {item['num']}")
 
-def nice_output(word_int, char_dict):
-    print("--- Begin report of books/frankenstein.txt ---\n")
+    print("============= END ===============")
 
-    # Print the word count
-    print(f"{word_int} words found in the document.")
 
-    # Sort the dictionary, reverse it so it's descending, and print each key, value
-    sorted_dict = dict(sorted(char_dict.items(), key=lambda item: item[1], reverse=True))
-    for key, value in sorted_dict.items():
-        print(f"The {key} character was found {value} times.")
-
-    print("\n--- End report ---")
-
-book = print_book(BOOK_PATH)
-words = word_count(book)
-chars = char_count(book)
-
-nice_output(words, chars)
+main()
